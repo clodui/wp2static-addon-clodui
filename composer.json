@@ -1,0 +1,71 @@
+{
+  "name": "wp2static/wp2static-addon-clodui",
+  "description": "Clodui deployment Add-on for WP2Static.",
+  "homepage": "https://www.clodui.com/wordpress/",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Rajeesh",
+      "email": "rajeesh@clodui.com",
+      "homepage": "https://www.clodui.com"
+    }
+  ],
+  "type": "wordpress-plugin",
+  "support": {
+    "issues": "https://github.com/clodui/wp2static-addon-clodui/issues",
+    "docs": "https://www.clodui.com/docs/wordpress/",
+    "source": "https://github.com/clodui/wp2static-addon-clodui/"
+  },
+  "repositories": [],
+  "require": {
+    "php": ">=7.2",
+    "aws/aws-sdk-php": "^3.147",
+    "ramsey/uuid": "^4.1",
+    "symfony/dotenv": "^5.1"
+  },
+  "require-dev": {
+    "phpstan/phpstan": "*",
+    "thecodingmachine/phpstan-strict-rules": "*",
+    "szepeviktor/phpstan-wordpress": "*",
+    "squizlabs/php_codesniffer": "*",
+    "phpunit/phpunit": "*",
+    "dealerdirect/phpcodesniffer-composer-installer": "*",
+    "wp-coding-standards/wpcs": "*",
+    "jakub-onderka/php-parallel-lint": "*",
+    "10up/wp_mock": "^0.4.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "WP2StaticClodui\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "PHPStan\\WordPress\\": "tests/phpstan/",
+      "WP2StaticClodui\\": "src/"
+    }
+  },
+  "config": {
+    "platform": {
+      "php": "7.2.17"
+    },
+    "preferred-install": {
+      "*": "dist"
+    },
+    "classmap-authoritative": true
+  },
+  "scripts": {
+    "phpstan": "vendor/bin/phpstan analyse",
+    "phpcs": "vendor/bin/phpcs --standard=./tools/phpcs.xml --ignore=*/tests/*,*/admin/*,**/coverage/*,*.js,*/vendor/*,*/views/*.php ./",
+    "phpcbf": "vendor/bin/phpcbf --standard=./tools/phpcs.xml --ignore=*/js/*,*/tests/*,*/admin/*,*/coverage/*,*.js,*/vendor/*,*/views/*.php ./",
+    "phpunit": "vendor/bin/phpunit ./tests/unit/",
+    "coverage": "vendor/bin/phpunit tests/unit --coverage-html coverage --whitelist src/",
+    "lint": "vendor/bin/parallel-lint --exclude vendor .",
+    "test": [
+      "@lint",
+      "@phpcs",
+      "@phpstan"
+    ],
+    "build": "/bin/sh tools/build_release.sh"
+  }
+}
